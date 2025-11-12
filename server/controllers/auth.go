@@ -19,7 +19,7 @@ type LoginInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
-var JWTSecret = []byte("secretkey")
+var JWTSecret []byte
 
 func Login(c *gin.Context) {
 	var input LoginInput

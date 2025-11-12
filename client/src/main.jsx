@@ -9,6 +9,14 @@ import "./styles.css";
 
 const basename = import.meta.env.BASE_URL || "/";
 
+if (sessionStorage.redirect) {
+  const redirect = sessionStorage.redirect;
+  delete sessionStorage.redirect;
+  if (redirect !== window.location.href) {
+    window.history.replaceState(null, "", redirect);
+  }
+}
+
 const Root = () => (
   <BrowserRouter basename={basename}>
     <Routes>

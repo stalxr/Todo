@@ -7281,15 +7281,15 @@ var ResultType;
   ResultType2["redirect"] = "redirect";
   ResultType2["error"] = "error";
 })(ResultType || (ResultType = {}));
-function matchRoutes(routes, locationArg, basename) {
-  if (basename === void 0) {
-    basename = "/";
+function matchRoutes(routes, locationArg, basename2) {
+  if (basename2 === void 0) {
+    basename2 = "/";
   }
-  return matchRoutesImpl(routes, locationArg, basename);
+  return matchRoutesImpl(routes, locationArg, basename2);
 }
-function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
+function matchRoutesImpl(routes, locationArg, basename2, allowPartial) {
   let location = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
-  let pathname = stripBasename(location.pathname || "/", basename);
+  let pathname = stripBasename(location.pathname || "/", basename2);
   if (pathname == null) {
     return null;
   }
@@ -7516,12 +7516,12 @@ function decodePath(value) {
     return value;
   }
 }
-function stripBasename(pathname, basename) {
-  if (basename === "/") return pathname;
-  if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) {
+function stripBasename(pathname, basename2) {
+  if (basename2 === "/") return pathname;
+  if (!pathname.toLowerCase().startsWith(basename2.toLowerCase())) {
     return null;
   }
-  let startIndex = basename.endsWith("/") ? basename.length - 1 : basename.length;
+  let startIndex = basename2.endsWith("/") ? basename2.length - 1 : basename2.length;
   let nextChar = pathname.charAt(startIndex);
   if (nextChar && nextChar !== "/") {
     return null;
@@ -7658,7 +7658,7 @@ function useHref(to, _temp) {
   } = _temp === void 0 ? {} : _temp;
   !useInRouterContext() ? invariant(false) : void 0;
   let {
-    basename,
+    basename: basename2,
     navigator: navigator2
   } = reactExports.useContext(NavigationContext);
   let {
@@ -7669,8 +7669,8 @@ function useHref(to, _temp) {
     relative
   });
   let joinedPathname = pathname;
-  if (basename !== "/") {
-    joinedPathname = pathname === "/" ? basename : joinPaths([basename, pathname]);
+  if (basename2 !== "/") {
+    joinedPathname = pathname === "/" ? basename2 : joinPaths([basename2, pathname]);
   }
   return navigator2.createHref({
     pathname: joinedPathname,
@@ -7701,7 +7701,7 @@ function useNavigateUnstable() {
   !useInRouterContext() ? invariant(false) : void 0;
   let dataRouterContext = reactExports.useContext(DataRouterContext);
   let {
-    basename,
+    basename: basename2,
     future,
     navigator: navigator2
   } = reactExports.useContext(NavigationContext);
@@ -7726,11 +7726,11 @@ function useNavigateUnstable() {
       return;
     }
     let path = resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, options.relative === "path");
-    if (dataRouterContext == null && basename !== "/") {
-      path.pathname = path.pathname === "/" ? basename : joinPaths([basename, path.pathname]);
+    if (dataRouterContext == null && basename2 !== "/") {
+      path.pathname = path.pathname === "/" ? basename2 : joinPaths([basename2, path.pathname]);
     }
     (!!options.replace ? navigator2.replace : navigator2.push)(path, options.state, options);
-  }, [basename, navigator2, routePathnamesJson, locationPathname, dataRouterContext]);
+  }, [basename2, navigator2, routePathnamesJson, locationPathname, dataRouterContext]);
   return navigate;
 }
 const OutletContext = /* @__PURE__ */ reactExports.createContext(null);
@@ -8140,15 +8140,15 @@ function Router(_ref5) {
     future
   } = _ref5;
   !!useInRouterContext() ? invariant(false) : void 0;
-  let basename = basenameProp.replace(/^\/*/, "/");
+  let basename2 = basenameProp.replace(/^\/*/, "/");
   let navigationContext = reactExports.useMemo(() => ({
-    basename,
+    basename: basename2,
     navigator: navigator2,
     static: staticProp,
     future: _extends$1({
       v7_relativeSplatPath: false
     }, future)
-  }), [basename, future, navigator2, staticProp]);
+  }), [basename2, future, navigator2, staticProp]);
   if (typeof locationProp === "string") {
     locationProp = parsePath(locationProp);
   }
@@ -8160,7 +8160,7 @@ function Router(_ref5) {
     key = "default"
   } = locationProp;
   let locationContext = reactExports.useMemo(() => {
-    let trailingPathname = stripBasename(pathname, basename);
+    let trailingPathname = stripBasename(pathname, basename2);
     if (trailingPathname == null) {
       return null;
     }
@@ -8174,7 +8174,7 @@ function Router(_ref5) {
       },
       navigationType
     };
-  }, [basename, pathname, search, hash, state, key, navigationType]);
+  }, [basename2, pathname, search, hash, state, key, navigationType]);
   if (locationContext == null) {
     return null;
   }
@@ -8287,7 +8287,7 @@ const START_TRANSITION = "startTransition";
 const startTransitionImpl = React[START_TRANSITION];
 function BrowserRouter(_ref4) {
   let {
-    basename,
+    basename: basename2,
     children,
     future,
     window: window2
@@ -8313,7 +8313,7 @@ function BrowserRouter(_ref4) {
   reactExports.useLayoutEffect(() => history.listen(setState), [history, setState]);
   reactExports.useEffect(() => logV6DeprecationWarnings(future), [future]);
   return /* @__PURE__ */ reactExports.createElement(Router, {
-    basename,
+    basename: basename2,
     children,
     location: state.location,
     navigationType: state.action,
@@ -8336,7 +8336,7 @@ const Link = /* @__PURE__ */ reactExports.forwardRef(function LinkWithRef(_ref7,
     viewTransition
   } = _ref7, rest = _objectWithoutPropertiesLoose(_ref7, _excluded);
   let {
-    basename
+    basename: basename2
   } = reactExports.useContext(NavigationContext);
   let absoluteHref;
   let isExternal = false;
@@ -8346,7 +8346,7 @@ const Link = /* @__PURE__ */ reactExports.forwardRef(function LinkWithRef(_ref7,
       try {
         let currentUrl = new URL(window.location.href);
         let targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to);
-        let path = stripBasename(targetUrl.pathname, basename);
+        let path = stripBasename(targetUrl.pathname, basename2);
         if (targetUrl.origin === currentUrl.origin && path != null) {
           to = path + targetUrl.search + targetUrl.hash;
         } else {
@@ -8430,7 +8430,7 @@ function App() {
   const token = localStorage.getItem("token");
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "page", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: "topbar", children: [
@@ -8711,11 +8711,11 @@ function Todos() {
   reactExports.useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/login");
+      navigate("/login", { replace: true });
       return;
     }
     load();
-  }, []);
+  }, [navigate]);
   async function load() {
     try {
       const data = await getTodos();
@@ -8779,8 +8779,16 @@ function Todos() {
     ] }, t2.ID)) })
   ] });
 }
-const Root = () => /* @__PURE__ */ jsxRuntimeExports.jsx(BrowserRouter, { basename: "/Todo/", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}), children: [
-  /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { index: true, element: /* @__PURE__ */ jsxRuntimeExports.jsx(Navigate, { to: "todos", replace: true }) }),
+const basename = "/Todo/";
+if (sessionStorage.redirect) {
+  const redirect = sessionStorage.redirect;
+  delete sessionStorage.redirect;
+  if (redirect !== window.location.href) {
+    window.history.replaceState(null, "", redirect);
+  }
+}
+const Root = () => /* @__PURE__ */ jsxRuntimeExports.jsx(BrowserRouter, { basename, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}), children: [
+  /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { index: true, element: /* @__PURE__ */ jsxRuntimeExports.jsx(Navigate, { to: "/todos", replace: true }) }),
   /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "login", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Login, {}) }),
   /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "register", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Register, {}) }),
   /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "todos", element: /* @__PURE__ */ jsxRuntimeExports.jsx(Todos, {}) })
