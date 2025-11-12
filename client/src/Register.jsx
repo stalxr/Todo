@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "./api.js";
+import { register, login } from "./api.js";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -13,8 +13,19 @@ export default function Register() {
     setMsg(null);
     try {
       await register(email.trim(), password);
-      setMsg("Регистрация успешна — добро пожаловать!");
-      setTimeout(() => navigate("/login"), 900);
+      const loginResult = await login(email.trim(), password);
+      if (loginResult.error) {
+        setMsg("Регистрация успешна, но не удалось войти. Попробуйте войти вручную.");
+        setTimeout(() => navigate("/login"), 2000);
+        return;
+      }
+      if (loginResult.token) {
+        localStorage.setItem("token", loginResult.token);
+        navigate("/todos", { replace: true });
+      } else {
+        setMsg("Регистрация успешна, но не удалось получить токен. Попробуйте войти вручную.");
+        setTimeout(() => navigate("/login"), 2000);
+      }
     } catch (e) {
       setMsg(e?.message || "Ошибка регистрации");
     }

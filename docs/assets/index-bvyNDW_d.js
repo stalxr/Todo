@@ -8673,8 +8673,19 @@ function Register() {
     setMsg(null);
     try {
       await register(email.trim(), password);
-      setMsg("Регистрация успешна — добро пожаловать!");
-      setTimeout(() => navigate("/login"), 900);
+      const loginResult = await login(email.trim(), password);
+      if (loginResult.error) {
+        setMsg("Регистрация успешна, но не удалось войти. Попробуйте войти вручную.");
+        setTimeout(() => navigate("/login"), 2e3);
+        return;
+      }
+      if (loginResult.token) {
+        localStorage.setItem("token", loginResult.token);
+        navigate("/todos", { replace: true });
+      } else {
+        setMsg("Регистрация успешна, но не удалось получить токен. Попробуйте войти вручную.");
+        setTimeout(() => navigate("/login"), 2e3);
+      }
     } catch (e2) {
       setMsg((e2 == null ? void 0 : e2.message) || "Ошибка регистрации");
     }
