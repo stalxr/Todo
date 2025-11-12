@@ -45,7 +45,7 @@ export default function Todos() {
   }
 
   async function onEdit(todo) {
-    const newTitle = prompt("New title", todo.Title);
+    const newTitle = prompt("Новое название", todo.Title);
     if (!newTitle) return;
     try {
       const updated = await updateTodo(todo.ID, { title: newTitle });
@@ -56,7 +56,7 @@ export default function Todos() {
   }
 
   async function onDelete(id) {
-    if (!confirm("Delete?")) return;
+    if (!confirm("Удалить задачу?")) return;
     try {
       await deleteTodo(id);
       setTodos(prev => prev.filter(t => t.ID !== id));
@@ -67,10 +67,10 @@ export default function Todos() {
 
   return (
     <div className="card">
-      <h2>Your Todos</h2>
+      <h2>Мои задачи</h2>
       <form onSubmit={onCreate} className="row">
-        <input value={title} onChange={e => setTitle(e.target.value)} placeholder="New todo" required />
-        <button type="submit">Add</button>
+        <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Новая задача" required />
+        <button type="submit">Добавить</button>
       </form>
 
       {err && <div className="error">{err}</div>}
@@ -81,8 +81,8 @@ export default function Todos() {
             <input type="checkbox" checked={t.IsDone} onChange={() => onToggle(t)} />
             <span className="title">{t.Title}</span>
             <div className="actions">
-              <button onClick={() => onEdit(t)}>Edit</button>
-              <button onClick={() => onDelete(t.ID)}>Delete</button>
+              <button onClick={() => onEdit(t)}>Изменить</button>
+              <button onClick={() => onDelete(t.ID)}>Удалить</button>
             </div>
           </li>
         ))}

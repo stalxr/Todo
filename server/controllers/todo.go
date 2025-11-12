@@ -81,7 +81,6 @@ func DeleteTodo(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
-// обновление полей итд
 func UpdateTodo(c *gin.Context) {
 	userID, ok := userIDFromContext(c)
 	if !ok {

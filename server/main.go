@@ -35,7 +35,6 @@ func main() {
 		port = "8080"
 	}
 
-	// Connect DB via shared database package
 	database.Connect(dbPath)
 
 	sqlDB, err := database.DB.DB()
@@ -48,7 +47,6 @@ func main() {
 
 	database.DB.AutoMigrate(&models.User{}, &models.Todo{})
 
-	// Propagate JWT secret to places that need it
 	controllers.JWTSecret = JWTSecret
 	middleware.JWTSecret = JWTSecret
 

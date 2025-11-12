@@ -8759,7 +8759,7 @@ function Todos() {
     }
   }
   async function onEdit(todo) {
-    const newTitle = prompt("New title", todo.Title);
+    const newTitle = prompt("Новое название", todo.Title);
     if (!newTitle) return;
     try {
       const updated = await updateTodo(todo.ID, { title: newTitle });
@@ -8769,7 +8769,7 @@ function Todos() {
     }
   }
   async function onDelete(id2) {
-    if (!confirm("Delete?")) return;
+    if (!confirm("Удалить задачу?")) return;
     try {
       await deleteTodo(id2);
       setTodos((prev) => prev.filter((t2) => t2.ID !== id2));
@@ -8778,18 +8778,18 @@ function Todos() {
     }
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Your Todos" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Мои задачи" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: onCreate, className: "row", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: title, onChange: (e) => setTitle(e.target.value), placeholder: "New todo", required: true }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", children: "Add" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("input", { value: title, onChange: (e) => setTitle(e.target.value), placeholder: "Новая задача", required: true }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", children: "Добавить" })
     ] }),
     err && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "error", children: err }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "list", children: todos.map((t2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: t2.IsDone ? "done" : "", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "checkbox", checked: t2.IsDone, onChange: () => onToggle(t2) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "title", children: t2.Title }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "actions", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onEdit(t2), children: "Edit" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onDelete(t2.ID), children: "Delete" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onEdit(t2), children: "Изменить" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => onDelete(t2.ID), children: "Удалить" })
       ] })
     ] }, t2.ID)) })
   ] });
