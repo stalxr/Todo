@@ -8505,7 +8505,22 @@ function buildUrl(path) {
   return `${base}${suffix}`;
 }
 async function request(path, options, defaultMessage) {
-  const response = await fetch(buildUrl(path), options);
+  let response;
+  try {
+    const url = buildUrl(path);
+    response = await fetch(url, {
+      ...options,
+      signal: AbortSignal.timeout(1e4)
+    });
+  } catch (error) {
+    if (error.name === "AbortError" || error.name === "TimeoutError") {
+      throw new Error("Превышено время ожидания. Сервер не отвечает.");
+    }
+    if (error instanceof TypeError && error.message.includes("fetch")) {
+      throw new Error("Не удалось подключиться к серверу. Проверьте, что API доступен: " + getApiBase());
+    }
+    throw error;
+  }
   if (response.status === 401) throw new Error("Не авторизован");
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error || defaultMessage);
