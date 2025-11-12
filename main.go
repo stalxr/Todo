@@ -72,16 +72,17 @@ func main() {
 		}
 	}
 	corsConfig := cors.Config{
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Authorization", "Content-Type"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
+		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:  []string{"Authorization", "Content-Type"},
+		ExposeHeaders: []string{"Content-Length"},
+		MaxAge:        12 * time.Hour,
 	}
 	if len(allowOrigins) == 0 {
 		corsConfig.AllowAllOrigins = true
+		corsConfig.AllowCredentials = false
 	} else {
 		corsConfig.AllowOrigins = allowOrigins
+		corsConfig.AllowCredentials = true
 	}
 	r.Use(cors.New(corsConfig))
 
