@@ -7,11 +7,13 @@ import Register from "./Register";
 import Todos from "./Todos";
 import "./styles.css";
 
+const basename = import.meta.env.BASE_URL || "/";
+
 const Root = () => (
-  <BrowserRouter basename={import.meta.env.BASE_URL ?? "/"}>
+  <BrowserRouter basename={basename}>
     <Routes>
       <Route path="/" element={<App />}>
-        <Route index element={<Navigate to="todos" replace />} />
+        <Route index element={<Navigate to="/todos" replace />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="todos" element={<Todos />} />

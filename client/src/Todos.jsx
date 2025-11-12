@@ -10,9 +10,9 @@ export default function Todos() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) { navigate("/login"); return; }
+    if (!token) { navigate("/login", { replace: true }); return; }
     load();
-  }, []);
+  }, [navigate]);
 
   async function load() {
     try {
