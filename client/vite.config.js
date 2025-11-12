@@ -2,10 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
-const frontendRoot = resolve(__dirname, 'frontend')
-
 export default defineConfig({
-  root: frontendRoot,
+  root: __dirname,
   appType: 'spa',
   base: '/Todo/',
   plugins: [react()],
@@ -14,7 +12,7 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    outDir: resolve(__dirname, 'docs'),
+    outDir: resolve(__dirname, '../docs'),
     emptyOutDir: true,
     minify: false,
     cssMinify: false,

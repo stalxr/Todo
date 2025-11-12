@@ -12,7 +12,7 @@ todos.db
 node_modules/
 
 # Build outputs
-frontend/dist/
+client/dist/
 
 # OS / Editor junk
 .DS_Store
