@@ -20,6 +20,18 @@ var JWTSecret []byte
 func main() {
 	_ = godotenv.Load()
 
+	// Устанавливаем режим Gin в зависимости от окружения
+	ginMode := os.Getenv("GIN_MODE")
+	if ginMode == "" {
+		if os.Getenv("PORT") != "" {
+			// Если PORT установлен (обычно в продакшене), используем release режим
+			ginMode = gin.ReleaseMode
+		} else {
+			ginMode = gin.DebugMode
+		}
+		gin.SetMode(ginMode)
+	}
+
 	dbPath := os.Getenv("DATABASE_PATH")
 	if dbPath == "" {
 		dbPath = "todo.db"
